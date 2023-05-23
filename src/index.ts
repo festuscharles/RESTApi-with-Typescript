@@ -4,11 +4,12 @@ import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from 'cors';
 import dotenv from 'dotenv'
+import router from './router/userRouter'
 
 dotenv.config()
 
 // Database Connection 
-mongoose.connect("mongodb://127.0.0.1:27017/nodeTsc")
+mongoose.connect(`${process.env.MONGODB_URI}`)
 
 const db = mongoose.connection
 db.on('err', (err) => console.log(err))
@@ -25,6 +26,7 @@ app.use(compression())
 app.use(cookieParser())
 app.use(express.json())
 
+app.use('/', router())
 
 const PORT = process.env.PORT || 3000
 

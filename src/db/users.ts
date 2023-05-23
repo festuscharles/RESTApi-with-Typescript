@@ -1,7 +1,18 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
-const userSchema = new Schema({
+interface userData {
+    _id?: string,
+    username: string,
+    email: string,
+    authentication: {
+        password: string,
+        salt: string,
+        sessionToken: string
+    }
+}
+
+const userSchema = new Schema<userData>({
     username: {
         type: String,
         required: true
@@ -27,5 +38,5 @@ const userSchema = new Schema({
     }
 })
 
-export const User = mongoose.model('User', userSchema)
+export const User = mongoose.model<userData>('User', userSchema)
 
